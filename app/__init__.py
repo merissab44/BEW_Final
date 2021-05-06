@@ -27,5 +27,9 @@ app.register_blueprint(main_routes)
 from app.auth.routes import auth as auth_routes
 app.register_blueprint(auth_routes)
 
+rom app.api.routes import api as api_routes
+app.register_blueprint(api_routes)
+
+
 with app.app_context():
     db.create_all()
