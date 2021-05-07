@@ -8,6 +8,7 @@
 h1 {
   font-size: 64px;
   text-align: center;
+  margin-bottom: 40px;
 }
 h4 {
   text-align: center;
@@ -35,13 +36,13 @@ label {
 }
 
 .btn {
-  background-color: #b62d2d;
+  background-color: #f0cd16;
   border: none;
   width: 150px;
   height: 40px;
   text-decoration: none;
 }
-#login a {
+#signup a {
   color: black;
   text-decoration: none;
 }
@@ -86,7 +87,7 @@ label {
 .login-main-text {
   margin-top: 20%;
   padding: 60px;
-  color: #fff;
+  color: black;
 }
 
 .login-main-text h2 {
