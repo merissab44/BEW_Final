@@ -2,6 +2,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 import os
 from flask_pymongo import PyMongo
 import json
+import requests
 from dotenv import load_dotenv
 
 api = Blueprint('api', __name__)
@@ -37,14 +38,14 @@ category_data = response.json()
 
 @api.route('/')
 def displayWelcomePage():
-    return render_template('index.html')
+    return render_template('base.html')
 
 
 @api.route('/home')
 def display_categories():
     business_array = []
     for biz in category_data['businesses']:
-        business_array.apiend(biz)
+        business_array.append(biz)
         # print(biz)
 
     # context = {
@@ -54,22 +55,22 @@ def display_categories():
     #     'address': business_array['location']
     # }
     print(business_array[0]['name'])
-    return render_template('home.html', context=business_array)
+    return render_template('feed.html', context=business_array)
 
 
-@api.route('/about')
-def meetUs():
-    return render_template('about.html')
+# @api.route('/about')
+# def meetUs():
+#     return render_template('about.html')
 
 
-@api.route('/feed')
-def feedPage():
-    return render_template('feed.html')
+# @api.route('/feed')
+# def feedPage():
+#     return render_template('feed.html')
 
 
-@api.route('/post')
-def postPage():
-    return render_template('post.html')
+# @api.route('/post')
+# def postPage():
+#     return render_template('post.html')
 
 
 @api.route('/listings')

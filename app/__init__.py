@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 from app.config import Config
 import os
 
@@ -15,7 +17,17 @@ db = SQLAlchemy(app)
 
 # TODO: Add authentication setup code here!
 
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+login_manager.init_app(app)
 
+from .models import User
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+bcrypt = Bcrypt(app)
 
 ###########################
 # Blueprints
@@ -27,7 +39,7 @@ app.register_blueprint(main_routes)
 from app.auth.routes import auth as auth_routes
 app.register_blueprint(auth_routes)
 
-rom app.api.routes import api as api_routes
+from app.api.routes import api as api_routes
 app.register_blueprint(api_routes)
 
 

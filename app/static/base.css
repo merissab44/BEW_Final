@@ -1,0 +1,58 @@
+body,
+html {
+  width: 100vw;
+  height: 100vh;
+}
+body {
+  background-image: url("../static/images/login.jpeg");
+  background-color: #cccccc;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.container {
+  margin-top: 40%;
+}
+h1 {
+  text-align: center;
+  color: #cccccc;
+}
+.navbar {
+  background-color: #b62d2d;
+}
+a {
+  color: #f0cd16;
+  text-decoration: none;
+}
+
+.nav-link {
+  font-size: 24px;
+}
+.navbar-brand {
+  font-size: 32px;
+}
+.btn {
+  background-color: #f0cd16;
+  border: none;
+  width: 150px;
+  height: 40px;
+  text-decoration: none;
+}
+#login {
+  background-color: #b62d2d;
+  color: white;
+}
+#signup {
+  background-color: #f0cd16;
+  color: black;
+}
+footer {
+  background-color: #b62d2d;
+  color: white;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 5rem;
+}
