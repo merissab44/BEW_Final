@@ -1,6 +1,6 @@
 .sidenav {
   height: 100%;
-  background-color: #b62d2d;
+  background-color: #f0cd16;
   overflow-x: hidden;
   padding-top: 20px;
   width: 60%;
@@ -42,7 +42,7 @@ label {
   text-decoration: none;
 }
 #login a {
-  color: white;
+  color: black;
   text-decoration: none;
 }
 @media screen and (max-height: 450px) {

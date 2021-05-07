@@ -16,7 +16,7 @@ body {
 }
 h1 {
   text-align: center;
-  color: #cccccc;
+  color: white;
 }
 .navbar {
   background-color: #b62d2d;
@@ -33,19 +33,22 @@ a {
   font-size: 32px;
 }
 .btn {
-  background-color: #f0cd16;
   border: none;
   width: 150px;
   height: 40px;
   text-decoration: none;
 }
+#login a {
+  color: white;
+}
+#signup a {
+  color: black;
+}
 #login {
   background-color: #b62d2d;
-  color: white;
 }
 #signup {
   background-color: #f0cd16;
-  color: black;
 }
 footer {
   background-color: #b62d2d;

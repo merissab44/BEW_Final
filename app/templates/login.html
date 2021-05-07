@@ -6,31 +6,44 @@
 
 {% block content %}
 
-<h1>Log In</h1>
-
-<form action="/login" method="POST">
-    {{ form.csrf_token }}
-    <fieldset>
-        <legend>Enter your credentials</legend>
-
-        {{ form.username.label }}
-        {{ form.username }}
-        <ul>
-        {% for error in form.username.errors %}
-            <li class="error">{{ error }}</li>
-        {% endfor %}
-        </ul>
-
-        {{ form.password.label }}
-        {{ form.password }}
-        <ul>
-        {% for error in form.password.errors %}
-            <li class="error">{{ error }}</li>
-        {% endfor %}
-        </ul>
-
-        {{ form.submit }}
-    </fieldset>
-</form>
+<div class="sidenav">
+    <div class="login-main-text">
+       <h1>Welcome Back!</h1>
+       <h4>Login here to get started</h4>
+    </div>
+ </div>
+ <div class="main">
+    <div class="col-md-6 col-sm-12 offset-3">
+       <div class="login-form">
+          <form action="/login" method="POST">
+            {{ form.csrf_token }}
+            <fieldset>
+                <legend>Enter your username and password</legend>
+        
+                {{ form.username.label }}
+                <br>
+                {{ form.username }}
+        
+                <ul>
+                    {% for error in form.username.errors %}
+                        <li class="error">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+        
+                {{ form.password.label }}
+                <br>
+                {{ form.password }}
+                <ul>
+                    {% for error in form.username.errors %}
+                        <li class="error">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+        
+                <button type="button" class="btn btn-link align-items-center" id="login"><a href="/feed">Login</a></button>
+            </fieldset>
+          </form>
+       </div>
+    </div>
+ </div>
 
 {% endblock %}

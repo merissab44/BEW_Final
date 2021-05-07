@@ -41,7 +41,7 @@ def displayWelcomePage():
     return render_template('base.html')
 
 
-@api.route('/home')
+@api.route('/feed')
 def display_categories():
     business_array = []
     for biz in category_data['businesses']:
