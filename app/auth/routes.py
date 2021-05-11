@@ -4,7 +4,7 @@ from app.models import User, Review, Restaurant
 from app.auth.forms import SignUpForm, LoginForm
 from app import bcrypt
 
-# Import app and db from events_app package so that we can run app
+# Import app and db from app package so that we can run app
 from app import app, db
 
 auth = Blueprint("auth", __name__)

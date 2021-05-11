@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from datetime import date, datetime
 import os
-from flask_pymongo import PyMongo
+# from flask_pymongo import PyMongo
 import json
 import requests
 from dotenv import load_dotenv
