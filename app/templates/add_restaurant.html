@@ -1,0 +1,39 @@
+{% extends 'feed.html' %}
+
+{% block content %}
+
+<p>Add a restaurant here</p>
+
+<!-- TODO: Add a <form> element here and use the form variable to show the labels & fields -->
+<form method="POST" action="{{ url_for('api.create_restaurant') }}">
+    {{ form.csrf_token }}
+    <fieldset>
+        <legend>Enter a new Restaurant</legend>
+
+        {{ form.name.label }}
+        {{ form.name }}
+        <ul>
+        {% for error in form.name.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        
+        {{ form.price_range.label }}
+        {{ form.price_range }}
+        <ul>
+        {% for error in form.name.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        {{ form.address.label }}
+        {{ form.address }}
+        <ul>
+        {% for error in form.name.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        {{ form.submit }}
+    </fieldset>
+</form>
+
+{% endblock %}

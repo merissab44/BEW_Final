@@ -4,35 +4,34 @@ from sqlalchemy.orm import backref
 from flask_login import UserMixin
 import enum
 
-class User():
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    location = db.Column(db.String(100), nullable=False)
-    review_id = db.Column(db.Integer, db.ForeignKey(
-        'review.id'), nullable=False)
+    location = db.Column(db.String(100), nullable=True)
     reviews = db.relationship('Review', back_populates='user')
-    restaurant_id = db.Column(db.Integer, db.ForeignKey(
-        'restaurant.id'), nullable=False)
     restaurants = db.relationship('Restaurant', back_populates='user')
 
 
-class Review():
+class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     #user that wrote the review
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
     user = db.relationship('User', back_populates='reviews')
+    restaurant = db.relationship('Restaurant', back_populates='reviews')
     title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.String(480))
 
 
-class Restaurant():
+class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     #user that created the restaurant listing
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id'), nullable=False)
     user =  user = db.relationship('User', back_populates='restaurants')
+    reviews = db.relationship('Review', back_populates='restaurant')
     name = db.Column(db.String(80), nullable=False)
     address = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float(precision=2), nullable=False) 

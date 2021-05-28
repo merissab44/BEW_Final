@@ -2,9 +2,8 @@ from app.models import Restaurant
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from datetime import date, datetime
-from app.api.forms import DataForm
+from app.api.forms import DataForm, RestaurantForm
 import os
-# from flask_pymongo import PyMongo
 import json
 import requests
 from dotenv import load_dotenv
@@ -37,7 +36,6 @@ response = requests.get(url=BUSINESS_ENDPOINT,
 # Converts the json string to a dictionary
 category_data = response.json()
 
-print(category_data)
 @api.route('/')
 def displayWelcomePage():
     return render_template('base.html')
@@ -58,10 +56,27 @@ def display_categories():
         business_array.append(biz)
     # print(business_array[0]['name'])
     return render_template('feed.html', context=business_array)
+    
 @api.route('/restaurant_detail/<restaurant_id>', methods=['GET', 'POST'])
 def detail(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
     return render_template('restaurant_detail.html',restaurant=restaurant)
+
+@login_required
+@api.route('/add_restaurant', methods=['GET','POST'])
+def create_restaurant():
+    form = RestaurantForm()
+    if form.validate_on_submit():
+        new_restaurant = Restaurant(
+            name=form.name.data,
+            price_range= form.price_range.data,
+            location=form.location.data
+        )
+        db.session.add(new_restaurant)
+        db.session.commit()
+        flash('Restaurant has been added!')
+        return redirect(url_for('api.feed', restaurant_id = new_restaurant.id))
+    return render_template('add_restaurant.html',form=form)
 
 @api.route('/listings')
 def listing():
