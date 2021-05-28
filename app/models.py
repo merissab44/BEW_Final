@@ -8,7 +8,12 @@ class User():
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
+    location = db.Column(db.String(100), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey(
+        'review.id'), nullable=False)
     reviews = db.relationship('Review', back_populates='user')
+    restaurant_id = db.Column(db.Integer, db.ForeignKey(
+        'restaurant.id'), nullable=False)
     restaurants = db.relationship('Restaurant', back_populates='user')
 
 

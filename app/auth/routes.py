@@ -21,7 +21,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         flash('Account Created.')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('api.data'))
     return render_template('signup.html', form=form)
 
 

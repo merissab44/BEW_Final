@@ -14,8 +14,8 @@
  </div>
  <div class="main">
     <div class="col-md-6 col-sm-12 offset-3">
-       <div class="login-form">
-          <form action="/login" method="POST">
+       <div class="signup-form">
+          <form action="/signup" method="POST">
             {{ form.csrf_token }}
             <fieldset>
                 <legend>Enter your username and password</legend>
@@ -39,7 +39,7 @@
                     {% endfor %}
                 </ul>
         
-                <button type="button" class="btn btn-link align-items-center" id="signup"><a href="/login">Create Account</a></button>
+                <button type="button" class="btn btn-link align-items-center" id="signup"><a href="/data">Create Account</a></button>
             </fieldset>
           </form>
        </div>

@@ -18,6 +18,23 @@ body {
 .card-body {
   background-color: beige;
 }
+.navbar {
+  color: white;
+}
+.navbar-brand {
+  color: white;
+  font-size: 1.75rem;
+}
+.navbar-brand:hover {
+  color: #f0cd16;
+}
+.nav-link {
+  font-size: 20px;
+  color: white;
+}
+.nav-link:hover {
+  color: #f0cd16;
+}
 h4,
 h6 {
   margin-left: -15px;
@@ -65,4 +82,22 @@ footer {
   bottom: 0;
   width: 100%;
   height: 5rem;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+#title {
+  font-size: 30px;
+  color: #b62d2d;
+}
+#title:hover {
+  color: #f0cd16;
+}
+#category {
+  color: #b62d2d;
+  margin-bottom: 50px;
 }

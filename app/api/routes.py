@@ -1,6 +1,8 @@
+from app.models import Restaurant
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from datetime import date, datetime
+from app.api.forms import DataForm
 import os
 # from flask_pymongo import PyMongo
 import json
@@ -34,48 +36,32 @@ response = requests.get(url=BUSINESS_ENDPOINT,
 
 # Converts the json string to a dictionary
 category_data = response.json()
-# print(category_data)
 
-
-# print(business_name)
-# print(rating)
-
-
+print(category_data)
 @api.route('/')
 def displayWelcomePage():
     return render_template('base.html')
+
+@api.route('/data', methods=['GET', 'POST'])
+def dataform():
+    form = DataForm()
+    if form.validate_on_submit():
+        #here is where I want to define the location parameter
+        PARAMETERS['location'] = form.location.data
+        return redirect(url_for('api.feed', form=form))
+    return render_template('data.html')
 
 @api.route('/feed')
 def display_categories():
     business_array = []
     for biz in category_data['businesses']:
         business_array.append(biz)
-        # print(biz)
-
-    # context = {
-    #     'name': business_array['name'],
-    #     'photo': business_array['image_url'],
-    #     'price': business_array['price'],
-    #     'address': business_array['location']
-    # }
-    print(business_array[0]['name'])
+    # print(business_array[0]['name'])
     return render_template('feed.html', context=business_array)
-
-
-# @api.route('/about')
-# def meetUs():
-#     return render_template('about.html')
-
-
-# @api.route('/feed')
-# def feedPage():
-#     return render_template('feed.html')
-
-
-# @api.route('/post')
-# def postPage():
-#     return render_template('post.html')
-
+@api.route('/restaurant_detail/<restaurant_id>', methods=['GET', 'POST'])
+def detail(restaurant_id):
+    restaurant = Restaurant.query.get(restaurant_id)
+    return render_template('restaurant_detail.html',restaurant=restaurant)
 
 @api.route('/listings')
 def listing():

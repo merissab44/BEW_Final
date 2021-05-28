@@ -33,8 +33,8 @@ bcrypt = Bcrypt(app)
 # Blueprints
 ###########################
 
-from app.main.routes import main as main_routes
-app.register_blueprint(main_routes)
+# from app.main.routes import main as main_routes
+# app.register_blueprint(main_routes)
 
 from app.auth.routes import auth as auth_routes
 app.register_blueprint(auth_routes)
