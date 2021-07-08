@@ -1,4 +1,7 @@
-{% extends base.html %}
+{% extends 'base.html' %}
+
+{% block content%}
+
 
 <p>
     <strong>Name:</strong>: {{ restaurant.name }}
@@ -7,4 +10,6 @@
 <p>
     <strong>Address</strong>: {{ restaurant.address }}
 </p>
-<h6 class="card-text"> Price: {{i.price}}</h6>
+<h6 class="card-text"> Price: {{restaurant.price}}</h6>
+
+{% endblock%}

@@ -36,6 +36,9 @@ bcrypt = Bcrypt(app)
 # from app.main.routes import main as main_routes
 # app.register_blueprint(main_routes)
 
+with app.app_context():
+    db.create_all()
+
 from app.auth.routes import auth as auth_routes
 app.register_blueprint(auth_routes)
 
@@ -43,5 +46,3 @@ from app.api.routes import api as api_routes
 app.register_blueprint(api_routes)
 
 
-with app.app_context():
-    db.create_all()

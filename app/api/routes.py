@@ -1,8 +1,8 @@
-from app.models import Restaurant
+from app.models import Restaurant, Review, User
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from datetime import date, datetime
-from app.api.forms import DataForm, RestaurantForm
+from app.api.forms import DataForm, RestaurantForm, ReviewForm
 import os
 import json
 import requests
@@ -36,47 +36,60 @@ response = requests.get(url=BUSINESS_ENDPOINT,
 # Converts the json string to a dictionary
 category_data = response.json()
 
+# add restaurants to database
+for restaurant in category_data['businesses']:
+    # print(restaurant['name'], restaurant['location']['display_address'], restaurant['id'])
+
+    existing_restaurant = Restaurant.query.get(restaurant['id'])
+    print(existing_restaurant)
+    if not existing_restaurant:
+        r = Restaurant(id=restaurant['id'], name=restaurant['name'], address=restaurant['location']['address1'], price=restaurant['price'])
+        db.session.add(r)
+        db.session.commit()
+        print('I have added the restaurants to the database')
+
+#check the database to see if the restuarant was added 
+
 @api.route('/')
 def displayWelcomePage():
     return render_template('base.html')
 
-@api.route('/data', methods=['GET', 'POST'])
-def dataform():
-    form = DataForm()
-    if form.validate_on_submit():
-        #here is where I want to define the location parameter
-        PARAMETERS['location'] = form.location.data
-        return redirect(url_for('api.feed', form=form))
-    return render_template('data.html')
-
+@login_required
 @api.route('/feed')
 def display_categories():
     business_array = []
     for biz in category_data['businesses']:
         business_array.append(biz)
     # print(business_array[0]['name'])
-    return render_template('feed.html', context=business_array)
+    return render_template('feed.html', restaurants=business_array)
     
 @api.route('/restaurant_detail/<restaurant_id>', methods=['GET', 'POST'])
-def detail(restaurant_id):
+def restaurant_detail(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
-    return render_template('restaurant_detail.html',restaurant=restaurant)
+    form = RestaurantForm(obj=restaurant)
+    return render_template('restaurant_detail.html', restaurant=restaurant, form=form)
 
 @login_required
-@api.route('/add_restaurant', methods=['GET','POST'])
-def create_restaurant():
-    form = RestaurantForm()
+@api.route('/review', methods=['GET','POST'])
+def leave_review():
+    form = ReviewForm()
     if form.validate_on_submit():
-        new_restaurant = Restaurant(
-            name=form.name.data,
-            price_range= form.price_range.data,
-            location=form.location.data
+        print("form is validated")
+        new_review = Review(
+            title=form.title.data,
+            content=form.content.data,
+            address=form.address.data
         )
-        db.session.add(new_restaurant)
+        db.session.add(new_review)
         db.session.commit()
-        flash('Restaurant has been added!')
-        return redirect(url_for('api.feed', restaurant_id = new_restaurant.id))
-    return render_template('add_restaurant.html',form=form)
+        flash('has added a review!')
+        return redirect(url_for('api.restaurant_detail', new_review=new_review))
+    return render_template('review.html', form=form)
+
+@api.route('/profile/<username>')
+def profile(username):
+    user = User.query.filter_by(username=username).one()
+    return render_template('profile.html', user=user)
 
 @api.route('/listings')
 def listing():

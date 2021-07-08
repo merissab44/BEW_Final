@@ -21,18 +21,20 @@ def signup():
         db.session.add(user)
         db.session.commit()
         flash('Account Created.')
-        return redirect(url_for('api.display_categories'))
+        return redirect(url_for('auth.login'))
     return render_template('signup.html', form=form)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    print("inside login route")
     form = LoginForm()
     if form.validate_on_submit():
+        print("inside login form")
         user = User.query.filter_by(username=form.username.data).first()
-        login_user(user, remember=True)
+        login_user(user, remember=True, force=True)
         next_page = request.args.get('next')
-        return redirect(next_page if next_page else url_for('api.feed'))
+        return redirect(next_page if next_page else url_for('api.display_categories'))
     return render_template('login.html', form=form)
 
 @auth.route('/logout')

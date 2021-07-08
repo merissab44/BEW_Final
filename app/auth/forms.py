@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
+from app import bcrypt
 from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import User
+
 
 
 class SignUpForm(FlaskForm):
@@ -25,3 +27,14 @@ class LoginForm(FlaskForm):
     )
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Log In")
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if not user:
+            raise ValidationError('No user with that username. Please try again.')
+
+    def validate_password(self, password):
+        user = User.query.filter_by(username=self.username.data).first()
+        if user and not bcrypt.check_password_hash(
+                user.password, password.data):
+            raise ValidationError('Password is incorrect. Please try again.')

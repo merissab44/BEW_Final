@@ -12,9 +12,17 @@
     <link rel="stylesheet" href="/static/style.css">
     {% block styles %}
     <link rel="stylesheet" href="/static/style.css">
-{% endblock %}
+    {% endblock %}
 </head>
 <body>
+
+  {% if current_user.is_authenticated %}
+            <p>You are logged in as {{ current_user.username }}</p>
+            {% endif %}
+
+            {% for message in get_flashed_messages() %}
+                <p>{{ message }}</p>
+            {% endfor %}
 
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
@@ -31,51 +39,31 @@
             <a class="nav-link" href="/about">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/add_restaurant">Add Restaurant</a>
+            <a class="nav-link" href="/profile/{{current_user.username}}">Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">Profile</a>
+          <li>
+            <a class="nav-link" href="/logout">Logout</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-
-<!-- 
-<div class="container">
-    <div class="row">
-
-        <div class="jumbotron jumbotron-fluid rounded" style="
-        height: 300px;
-        margin: 20px;
-        background-image: url('../static/images/jumbotron.jpeg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        ">
-            <div class="container" >
-            </div>
-        </div> -->
-
-        <!-- Most popular category -->
-
         <div class="row">
             <h1 class="text-center" id="category">Cheap Local Restaurants</h1>
         </div>
         <div class="container" id="popular">
-            {% for i in context %}
+            {% for restaurant in restaurants %}
                 <div class=" col-3 card">
-                    <a href=""></a><img src="{{i.image_url}}" class="card-img-top" alt="..." data-toggle="modal" data-target="#listing">
+                    <a href=""></a><img src="{{restaurant.image_url}}" class="card-img-top" alt="..." data-toggle="modal" data-target="#listing">
                     <div class="card-body">
-                    <li><a href="/restaurant_detail" id="title">{{i.name}}</a></li>
-                    <small>{{i.address1}}</small>
-                    <button type="button" class="btn btn-danger"><a href="/review">Leave Review</a></button>
+                    <li><a href="/restaurant_detail/{{restaurant.id}}" id="title">{{restaurant.name}}</a></li>
+                    <small>{{restaurant.address1}}</small>
                     </div>
                     <div class="modal fade" id="listing" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                                <img src="{{i.image_url}}">
+                                <img src="{{restaurant.image_url}}">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
@@ -98,22 +86,6 @@
             {% endfor %}
             <a id="button" href="../templates/about.html">See all</a>
         </div>
-
-        <!-- Discover Areas -->
-        <h1 class="text-center" id="category">Added Restaurants</h1>
-        <div class="container">
-            <div class="row">
-                <div class="card">
-                    <img src="../static/images/san-fran.jpeg" class="card-img-top" alt="...">
-                </div>
-                <div class="card">
-                    <img src="../static/images/oakland.jpeg" class="card-img-top" alt="...">
-                </div>
-                <div class="card">
-                    <img src="../static/images/san-jose.jpeg" class="card-img-top" alt="...">
-                </div>
-            </div>
-            </div>
     </div>
 </div>
 
