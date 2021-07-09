@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
+{% block styles %}
+<link rel="stylesheet" href="/static/restaurant_detail.css">
+{% endblock %}
+
 {% block content%}
 
-
-<p>
-    <strong>Name:</strong>: {{ restaurant.name }}
-</p>
-
-<p>
-    <strong>Address</strong>: {{ restaurant.address }}
-</p>
-<h6 class="card-text"> Price: {{restaurant.price}}</h6>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <img src="{{restaurant.image_url}}" class="background-img">
+      <h1 class="display-4">{{restaurant.name}}</h1>
+      <p class="lead">Adress: {{restaurant.address}}</p>
+      <p class="lead">Price: {{restaurant.price}}</p>
+    </div>
+  </div>
 
 {% endblock%}

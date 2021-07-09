@@ -41,7 +41,6 @@ for restaurant in category_data['businesses']:
     # print(restaurant['name'], restaurant['location']['display_address'], restaurant['id'])
 
     existing_restaurant = Restaurant.query.get(restaurant['id'])
-    print(existing_restaurant)
     if not existing_restaurant:
         r = Restaurant(id=restaurant['id'], name=restaurant['name'], address=restaurant['location']['address1'], price=restaurant['price'])
         db.session.add(r)
@@ -67,7 +66,7 @@ def display_categories():
 def restaurant_detail(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
     form = RestaurantForm(obj=restaurant)
-    return render_template('restaurant_detail.html', restaurant=restaurant, form=form)
+    return render_template('restaurant_detail.html',restaurant=restaurant, form=form)
 
 @login_required
 @api.route('/review', methods=['GET','POST'])

@@ -15,6 +15,9 @@ def login(client, username, password):
     return client.post(
         "/login", data=dict(username=username, password=password), follow_redirects=True)
 
+def data(client, id):
+    return client.post('/restaurant_detail', data=dict(id=id), follow_redirects=True)
+
 
 def logout(client):
     return client.get("/logout", follow_redirects=True)
@@ -62,4 +65,13 @@ class MainTests(unittest.TestCase):
         self.assertIn('Sign Up', response_text)
         self.assertNotIn()
 
-    
+    def test_detailpage(self):
+        create_user()
+        response = self.app.get('/restaurant_detail/Qfc4w5l92Uvq9BsrP15O4A', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+        response_text = response.get_data(as_text = True)
+
+        self.assertIn('Arizmendi Bakery')
+        self.assertIn('Adress: 3265 Lakeshore Ave')
+        self.assertIn('Price: $')

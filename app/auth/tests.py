@@ -2,6 +2,8 @@
 import os
 import unittest
 
+from unittest import TestCase
+
 from datetime import date
 
 from app import app, db, bcrypt
@@ -16,7 +18,7 @@ python -m unittest books_app.auth.tests
 
 def create_user():
     password_hash = bcrypt.generate_password_hash("password").decode("utf-8")
-    user = User(username="me1", password=password_hash)
+    user = User(username="merissa", password=password_hash)
     db.session.add(user)
     db.session.commit()
 
@@ -31,18 +33,12 @@ class AuthTests(unittest.TestCase):
         self.app = app.test_client()
         db.drop_all()
         db.create_all()
-    def test_signup(self):
-        """ Test the user has signed up"""
-        post_data = {"username": "me1", "password": "tiger"}
-        self.app.post("/signup", data=post_data)
-        existing_user = User.query.filter_by(username="me1").one()
-        self.assertEqual(existing_user.username, "me1")
 
     def signup_existing_user(self):
         """ If user is trying to sign up but they already 
         exist in database, it should return an error message """
         create_user()
-        post_data = {"username": "me1", "password": "tiger"}
+        post_data = {"username": "audrey", "password": "tiger"}
         response = self.app.post("/signup", data=post_data)
         response_text = response.get_data(as_text=True)
         self.assertIn(
