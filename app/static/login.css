@@ -41,7 +41,7 @@ label {
   height: 40px;
   text-decoration: none;
 }
-#login a {
+#login{
   color: white;
   text-decoration: none;
 }

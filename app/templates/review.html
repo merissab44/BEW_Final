@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="/static/review.css">
+{% endblock %}
+
+{% block content%}
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/feed">Cheap Eats</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/feed">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile/{{current_user.username}}">Profile</a>
+          </li>
+          <li>
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<form method="POST" action="/review/{{restaurant.id}}/{{user.id}}">
+    {{ form.csrf_token }}
+    <fieldset id="add">
+        <legend class="text-center">Leave a Review!</legend>
+
+        <h6 class="text-center">{{ form.title.label }}</h6>
+        <br>
+        {{ form.title }}
+        <ul>
+        {% for error in form.title.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        
+        <h6 class="text-center">{{ form.content.label }}</h6>
+        <br>
+        {{ form.content }}
+        <ul>
+        {% for error in form.content.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        {{ form.submit }}
+    </fieldset>
+</form>
+
+<footer>
+    <p>&copy; Cheap Eats </p>
+</footer>
+
+{% endblock%}

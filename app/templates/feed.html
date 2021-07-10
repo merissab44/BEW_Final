@@ -57,7 +57,7 @@
                     <a href=""></a><img src="{{restaurant.image_url}}" class="card-img-top" alt="..." data-toggle="modal" data-target="#listing">
                     <div class="card-body">
                     <li><a href="/restaurant_detail/{{restaurant.id}}" id="title">{{restaurant.name}}</a></li>
-                    <small>{{restaurant.address1}}</small>
+                    <a id="review" href="/review/{{restaurant.id}}/{{current_user.id}}">Leave a Review!</a>
                     </div>
                     <div class="modal fade" id="listing" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">

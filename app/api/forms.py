@@ -16,5 +16,5 @@ class RestaurantForm(FlaskForm):
 
 class ReviewForm(FlaskForm):
     title = StringField("title", validators=[DataRequired()])
-    content = TextAreaField("Leave Review", validators=[DataRequired()])
+    content = TextAreaField("message", validators=[DataRequired()])
     submit = SubmitField("Post")

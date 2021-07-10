@@ -62,28 +62,35 @@ def display_categories():
     # print(business_array[0]['name'])
     return render_template('feed.html', restaurants=business_array)
     
-@api.route('/restaurant_detail/<restaurant_id>', methods=['GET', 'POST'])
-def restaurant_detail(restaurant_id):
-    restaurant = Restaurant.query.get(restaurant_id)
+@api.route('/restaurant_detail/<review_id>', methods=['GET', 'POST'])
+def restaurant_detail(review_id):
+    reviews = Review.query.get(review_id)
+    restaurant = Restaurant.query.get(reviews.restaurant_id)
+    # user = User.query.get(user_id)
     form = RestaurantForm(obj=restaurant)
-    return render_template('restaurant_detail.html',restaurant=restaurant, form=form)
+    return render_template('restaurant_detail.html',restaurant=restaurant, form=form, reviews=reviews)
 
 @login_required
-@api.route('/review', methods=['GET','POST'])
-def leave_review():
+@api.route('/review/<restaurant_id>/<user_id>', methods=['GET','POST'])
+def leave_review(restaurant_id, user_id):
+    # restaurant = Restaurant.query.get(restaurant_id)
+    # user = User.query.get(user_id)
+    # print(user)
     form = ReviewForm()
     if form.validate_on_submit():
         print("form is validated")
         new_review = Review(
+            user_id = user_id,
+            restaurant_id = restaurant_id,
             title=form.title.data,
-            content=form.content.data,
-            address=form.address.data
+            content=form.content.data
         )
         db.session.add(new_review)
         db.session.commit()
         flash('has added a review!')
-        return redirect(url_for('api.restaurant_detail', new_review=new_review))
-    return render_template('review.html', form=form)
+        return redirect(url_for('api.restaurant_detail', review_id = new_review.id))
+    return render_template('review.html', form=form, restaurant=restaurant)
+
 
 @api.route('/profile/<username>')
 def profile(username):
