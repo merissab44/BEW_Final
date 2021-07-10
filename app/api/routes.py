@@ -88,7 +88,7 @@ def leave_review(restaurant_id, user_id):
         db.session.add(new_review)
         db.session.commit()
         flash('has added a review!')
-        return redirect(url_for('api.restaurant_detail', review_id = new_review.id))
+        return redirect(url_for('api.restaurant_detail', review=new_review, review_id = new_review.id, user_id=user_id, restaurant_id=restaurant_id))
     return render_template('review.html', form=form, restaurant=restaurant)
 
 

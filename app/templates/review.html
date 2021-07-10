@@ -31,7 +31,7 @@
     </div>
   </nav>
 
-<form method="POST" action="/review/{{restaurant.id}}/{{user.id}}">
+<form method="POST" action="/review/{{restaurant.id}}/{{current_user.id}}">
     {{ form.csrf_token }}
     <fieldset id="add">
         <legend class="text-center">Leave a Review!</legend>
